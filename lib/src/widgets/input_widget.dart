@@ -291,19 +291,38 @@ class _InputWidgetState extends State<InternationalPhoneNumberInput> {
         );
 
     if (widget.selectorConfig.setSelectorButtonAsPrefixIcon) {
+      bool direction =
+          Directionality.of(context) == TextDirection.ltr ? true : false;
       return value.copyWith(
-          prefixIcon: SelectorButton(
-        country: country,
-        countries: countries,
-        onCountryChanged: onCountryChanged,
-        selectorConfig: widget.selectorConfig,
-        selectorTextStyle: widget.selectorTextStyle,
-        searchBoxDecoration: widget.searchBoxDecoration,
-        locale: locale,
-        isEnabled: widget.isEnabled,
-        autoFocusSearchField: widget.autoFocusSearch,
-        isScrollControlled: widget.countrySelectorScrollControlled,
-      ));
+        prefixIcon: direction
+            ? SelectorButton(
+                country: country,
+                countries: countries,
+                onCountryChanged: onCountryChanged,
+                selectorConfig: widget.selectorConfig,
+                selectorTextStyle: widget.selectorTextStyle,
+                searchBoxDecoration: widget.searchBoxDecoration,
+                locale: locale,
+                isEnabled: widget.isEnabled,
+                autoFocusSearchField: widget.autoFocusSearch,
+                isScrollControlled: widget.countrySelectorScrollControlled,
+              )
+            : null,
+        suffixIcon: direction
+            ? null
+            : SelectorButton(
+                country: country,
+                countries: countries,
+                onCountryChanged: onCountryChanged,
+                selectorConfig: widget.selectorConfig,
+                selectorTextStyle: widget.selectorTextStyle,
+                searchBoxDecoration: widget.searchBoxDecoration,
+                locale: locale,
+                isEnabled: widget.isEnabled,
+                autoFocusSearchField: widget.autoFocusSearch,
+                isScrollControlled: widget.countrySelectorScrollControlled,
+              ),
+      );
     }
 
     return value;
@@ -421,7 +440,7 @@ class _InputWidgetView
           Flexible(
             child: TextFormField(
               key: widget.fieldKey ?? Key(TestHelper.TextInputKeyValue),
-              // textDirection: TextDirection.ltr,
+              textDirection: TextDirection.ltr,
               controller: state.controller,
               cursorColor: widget.cursorColor,
               focusNode: widget.focusNode,
